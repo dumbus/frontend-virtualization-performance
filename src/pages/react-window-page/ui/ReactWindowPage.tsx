@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { VariableSizeGrid as Grid } from 'react-window';
+
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
 
 import { ReactWindowPageProps } from '../model/types';

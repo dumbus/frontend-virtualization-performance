@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AutoSizer, Grid } from 'react-virtualized';
+
 import { TOTAL_COLUMNS, TOTAL_ROWS } from 'shared';
 
 import { ReactVirtualizedPageProps } from '../model/types';
