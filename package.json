@@ -12,6 +12,8 @@
   "dependencies": {
     "@handsontable/react": "^15.3.0",
     "@tanstack/react-virtual": "^3.13.10",
+    "ag-grid-community": "^33.3.2",
+    "ag-grid-react": "^33.3.2",
     "classnames": "^2.5.1",
     "handsontable": "^15.3.0",
     "react": "^19.1.0",

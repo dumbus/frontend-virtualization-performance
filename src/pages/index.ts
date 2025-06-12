@@ -1,3 +1,4 @@
+export * from './ag-grid-page';
 export * from './handsontable-page';
 export * from './react-virtualized-page';
 export * from './react-virtuoso-page';

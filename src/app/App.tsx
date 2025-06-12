@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import { AgGridPage } from 'pages';
 import { HandsontablePage } from 'pages';
 import { ReactVirtualizedPage } from 'pages';
 import { ReactVirtuosoPage } from 'pages';
@@ -12,6 +13,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/ag-grid" element={<AgGridPage visibleColumnCount={10} visibleRowCount={10} />} />
         <Route path="/handsontable" element={<HandsontablePage visibleColumnCount={10} visibleRowCount={10} />} />
         <Route
           path="/react-virtualized"
