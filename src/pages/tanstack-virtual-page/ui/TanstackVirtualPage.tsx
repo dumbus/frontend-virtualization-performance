@@ -3,10 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
+import { VirtualizedPageProps } from 'shared';
 
-import { TanstackVirtualPageProps } from '../model/types';
-
-export const TanstackVirtualPage: React.FC<TanstackVirtualPageProps> = ({
+export const TanstackVirtualPage: React.FC<VirtualizedPageProps> = ({
   visibleRowCount = 10,
   visibleColumnCount = 10
 }) => {

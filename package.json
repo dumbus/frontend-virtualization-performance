@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@handsontable/react": "^15.3.0",
     "@tanstack/react-virtual": "^3.13.10",
     "classnames": "^2.5.1",
+    "handsontable": "^15.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",

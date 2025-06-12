@@ -3,10 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 import { TOTAL_ROWS } from 'shared';
+import { VirtualizedPageProps } from 'shared';
 
-import { ReactVirtuosoPageProps } from '../model/types';
-
-export const ReactVirtuosoPage: React.FC<ReactVirtuosoPageProps> = ({
+export const ReactVirtuosoPage: React.FC<VirtualizedPageProps> = ({
   visibleRowCount = 10,
   visibleColumnCount = 10
 }) => {

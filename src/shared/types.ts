@@ -1,4 +1,4 @@
-export interface TanstackVirtualPageProps {
+export interface VirtualizedPageProps {
   visibleRowCount?: number;
   visibleColumnCount?: number;
 }

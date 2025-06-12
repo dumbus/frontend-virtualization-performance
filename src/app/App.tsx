@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import { HandsontablePage } from 'pages';
 import { ReactVirtualizedPage } from 'pages';
 import { ReactVirtuosoPage } from 'pages';
 import { ReactWindowPage } from 'pages';
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/handsontable" element={<HandsontablePage visibleColumnCount={10} visibleRowCount={10} />} />
         <Route
           path="/react-virtualized"
           element={<ReactVirtualizedPage visibleColumnCount={10} visibleRowCount={10} />}

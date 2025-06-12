@@ -3,10 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
+import { VirtualizedPageProps } from 'shared';
 
-import { ReactWindowPageProps } from '../model/types';
-
-export const ReactWindowPage: React.FC<ReactWindowPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
+export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   const containerRef = useRef<HTMLDivElement>(null);
