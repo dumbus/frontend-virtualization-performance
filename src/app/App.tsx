@@ -5,6 +5,7 @@ import { HandsontablePage } from 'pages';
 import { ReactVirtualizedPage } from 'pages';
 import { ReactVirtuosoPage } from 'pages';
 import { ReactWindowPage } from 'pages';
+import { SlickGridPage } from 'pages';
 import { TanstackVirtualPage } from 'pages';
 
 import 'styles/styles.scss';
@@ -21,6 +22,7 @@ const App = () => {
         />
         <Route path="/react-virtuoso" element={<ReactVirtuosoPage visibleColumnCount={10} visibleRowCount={10} />} />
         <Route path="/react-window" element={<ReactWindowPage visibleColumnCount={10} visibleRowCount={10} />} />
+        <Route path="/slickgrid" element={<SlickGridPage visibleColumnCount={10} visibleRowCount={10} />} />
         <Route
           path="/tanstack-virtual"
           element={<TanstackVirtualPage visibleColumnCount={10} visibleRowCount={10} />}

@@ -12,6 +12,7 @@
   "dependencies": {
     "@handsontable/react": "^15.3.0",
     "@tanstack/react-virtual": "^3.13.10",
+    "@types/sortablejs": "^1.15.8",
     "ag-grid-community": "^33.3.2",
     "ag-grid-react": "^33.3.2",
     "classnames": "^2.5.1",
@@ -22,11 +23,14 @@
     "react-virtualized": "^9.22.6",
     "react-virtuoso": "^4.12.8",
     "react-window": "^1.8.11",
-    "sass": "^1.89.0"
+    "sass": "^1.89.0",
+    "slickgrid": "^5.15.4",
+    "sortablejs": "^1.15.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@types/eslint": "^9.6.1",
+    "@types/jquery": "^3.5.32",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/react-virtualized": "^9.22.2",
