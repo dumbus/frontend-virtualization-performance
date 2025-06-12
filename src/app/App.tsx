@@ -7,6 +7,8 @@ import { ReactVirtuosoPage } from 'pages';
 import { ReactWindowPage } from 'pages';
 import { SlickGridPage } from 'pages';
 import { TanstackVirtualPage } from 'pages';
+import { CustomCssContentVisibilityPage } from 'pages';
+import { CustomObserverApiPage } from 'pages';
 
 import 'styles/styles.scss';
 
@@ -26,6 +28,15 @@ const App = () => {
         <Route
           path="/tanstack-virtual"
           element={<TanstackVirtualPage visibleColumnCount={10} visibleRowCount={10} />}
+        />
+
+        <Route
+          path="/css-content-visibility"
+          element={<CustomCssContentVisibilityPage visibleColumnCount={10} visibleRowCount={10} />}
+        />
+        <Route
+          path="/custom-observer-api"
+          element={<CustomObserverApiPage visibleColumnCount={10} visibleRowCount={10} />}
         />
       </Routes>
     </Router>
