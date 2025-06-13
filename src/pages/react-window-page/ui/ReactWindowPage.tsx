@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { VariableSizeGrid as Grid } from 'react-window';
 
-import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
-export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
+export const ReactWindowPage = () => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight - 64 });
+
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -55,8 +56,8 @@ export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCoun
       <PerformanceWidget updateInterval={100} />
 
       <Grid
-        columnCount={TOTAL_COLUMNS}
-        rowCount={TOTAL_ROWS}
+        columnCount={totalColumnCount}
+        rowCount={totalRowCount}
         columnWidth={getColumnWidth}
         rowHeight={getRowHeight}
         width={containerSize.width}

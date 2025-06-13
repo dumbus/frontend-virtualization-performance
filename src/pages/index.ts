@@ -1,3 +1,5 @@
+export * from './main-page';
+
 export * from './ag-grid-page';
 export * from './handsontable-page';
 export * from './react-virtualized-page';

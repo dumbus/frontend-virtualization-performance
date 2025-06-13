@@ -24,6 +24,7 @@
 
     "paths": {
       "app/*": ["app/*"],
+      "context/*": ["context/*"],
       "features/*": ["features/*"],
       "pages/*": ["pages/*"],
       "shared/*": ["shared/*"],

@@ -2,14 +2,12 @@ import React from 'react';
 
 import { AutoSizer, Grid } from 'react-virtualized';
 
-import { TOTAL_COLUMNS, TOTAL_ROWS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
-export const ReactVirtualizedPage: React.FC<VirtualizedPageProps> = ({
-  visibleRowCount = 10,
-  visibleColumnCount = 10
-}) => {
+export const ReactVirtualizedPage = () => {
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
+
   const cellRenderer = ({
     columnIndex,
     rowIndex,
@@ -48,8 +46,8 @@ export const ReactVirtualizedPage: React.FC<VirtualizedPageProps> = ({
           return (
             <Grid
               cellRenderer={cellRenderer}
-              columnCount={TOTAL_COLUMNS}
-              rowCount={TOTAL_ROWS}
+              columnCount={totalColumnCount}
+              rowCount={totalRowCount}
               columnWidth={columnWidth}
               rowHeight={rowHeight}
               width={width}

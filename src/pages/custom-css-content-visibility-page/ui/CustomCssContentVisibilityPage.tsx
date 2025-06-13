@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { VirtualizedPageProps } from 'shared';
-import { TOTAL_COLUMNS, TOTAL_ROWS } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
-export const CustomCssContentVisibilityPage: React.FC<VirtualizedPageProps> = ({
-  visibleRowCount = 10,
-  visibleColumnCount = 10
-}) => {
+export const CustomCssContentVisibilityPage = () => {
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [containerSize, setContainerSize] = useState({
@@ -37,8 +35,8 @@ export const CustomCssContentVisibilityPage: React.FC<VirtualizedPageProps> = ({
   const cellWidth = containerSize.width / visibleColumnCount;
   const cellHeight = containerSize.height / visibleRowCount;
 
-  const totalWidth = TOTAL_COLUMNS * cellWidth;
-  const totalHeight = TOTAL_ROWS * cellHeight;
+  const totalWidth = totalColumnCount * cellWidth;
+  const totalHeight = totalRowCount * cellHeight;
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     setScrollTop(e.currentTarget.scrollTop);
@@ -46,10 +44,10 @@ export const CustomCssContentVisibilityPage: React.FC<VirtualizedPageProps> = ({
   };
 
   const startRow = Math.max(0, Math.floor(scrollTop / cellHeight) - buffer);
-  const endRow = Math.min(TOTAL_ROWS, Math.ceil((scrollTop + containerSize.height) / cellHeight) + buffer);
+  const endRow = Math.min(totalRowCount, Math.ceil((scrollTop + containerSize.height) / cellHeight) + buffer);
 
   const startCol = Math.max(0, Math.floor(scrollLeft / cellWidth) - buffer);
-  const endCol = Math.min(TOTAL_COLUMNS, Math.ceil((scrollLeft + containerSize.width) / cellWidth) + buffer);
+  const endCol = Math.min(totalColumnCount, Math.ceil((scrollLeft + containerSize.width) / cellWidth) + buffer);
 
   const visibleRows = [];
   for (let rowIndex = startRow; rowIndex < endRow; rowIndex++) {

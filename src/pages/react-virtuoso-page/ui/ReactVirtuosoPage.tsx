@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { Virtuoso } from 'react-virtuoso';
 
-import { TOTAL_ROWS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
-export const ReactVirtuosoPage: React.FC<VirtualizedPageProps> = ({
-  visibleRowCount = 10,
-  visibleColumnCount = 10
-}) => {
+export const ReactVirtuosoPage = () => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  const { visibleRowCount, visibleColumnCount, totalRowCount } = useSettings();
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,7 +28,7 @@ export const ReactVirtuosoPage: React.FC<VirtualizedPageProps> = ({
       <PerformanceWidget updateInterval={100} />
 
       <Virtuoso
-        totalCount={TOTAL_ROWS}
+        totalCount={totalRowCount}
         style={{ height: '100%', width: '100%' }}
         itemSize={() => rowHeight}
         itemContent={(rowIndex) => (

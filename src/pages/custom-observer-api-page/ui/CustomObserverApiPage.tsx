@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { VirtualizedPageProps } from 'shared';
-import { TOTAL_COLUMNS, TOTAL_ROWS } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
-export const CustomObserverApiPage: React.FC<VirtualizedPageProps> = ({
-  visibleRowCount = 10,
-  visibleColumnCount = 10
-}) => {
+export const CustomObserverApiPage = () => {
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [containerSize, setContainerSize] = useState({
@@ -87,9 +85,9 @@ export const CustomObserverApiPage: React.FC<VirtualizedPageProps> = ({
   });
 
   const minRow = visibleRows.length ? Math.max(0, Math.min(...visibleRows) - 5) : 0;
-  const maxRow = visibleRows.length ? Math.min(TOTAL_ROWS - 1, Math.max(...visibleRows) + 5) : visibleRowCount;
+  const maxRow = visibleRows.length ? Math.min(totalRowCount - 1, Math.max(...visibleRows) + 5) : visibleRowCount;
   const minCol = visibleCols.length ? Math.max(0, Math.min(...visibleCols) - 5) : 0;
-  const maxCol = visibleCols.length ? Math.min(TOTAL_COLUMNS - 1, Math.max(...visibleCols) + 5) : visibleColumnCount;
+  const maxCol = visibleCols.length ? Math.min(totalColumnCount - 1, Math.max(...visibleCols) + 5) : visibleColumnCount;
 
   const cellsToRender = [];
   for (let r = minRow; r <= maxRow; r++) {
@@ -113,8 +111,8 @@ export const CustomObserverApiPage: React.FC<VirtualizedPageProps> = ({
 
       <div
         style={{
-          width: cellWidth * TOTAL_COLUMNS,
-          height: cellHeight * TOTAL_ROWS,
+          width: cellWidth * totalColumnCount,
+          height: cellHeight * totalRowCount,
           position: 'relative'
         }}
       >

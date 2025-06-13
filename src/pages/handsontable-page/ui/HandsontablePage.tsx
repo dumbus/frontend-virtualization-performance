@@ -2,14 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { HotTable } from '@handsontable/react';
 
-import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
 import 'handsontable/dist/handsontable.full.min.css';
 
-export const HandsontablePage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
+export const HandsontablePage = () => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
 
   const updateContainerSize = useCallback(() => {
     setContainerSize({
@@ -28,8 +29,8 @@ export const HandsontablePage: React.FC<VirtualizedPageProps> = ({ visibleRowCou
   const rowHeight = containerSize.height / visibleRowCount;
   const colWidth = containerSize.width / visibleColumnCount;
 
-  const data = Array.from({ length: TOTAL_ROWS }, (_, rowIndex) =>
-    Array.from({ length: TOTAL_COLUMNS }, (_, colIndex) => `R${rowIndex}, C${colIndex}`)
+  const data = Array.from({ length: totalRowCount }, (_, rowIndex) =>
+    Array.from({ length: totalColumnCount }, (_, colIndex) => `R${rowIndex}, C${colIndex}`)
   );
 
   return (

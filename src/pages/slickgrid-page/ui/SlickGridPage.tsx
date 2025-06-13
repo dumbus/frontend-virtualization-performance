@@ -3,16 +3,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SlickGrid, SlickDataView, Column, GridOption } from 'slickgrid';
 import Sortable from 'sortablejs';
 
-// It is important to create Sortable global
-(window as any).Sortable = Sortable;
+import { useSettings } from 'context';
+import { PerformanceWidget } from 'widgets';
 
 import 'slickgrid/dist/styles/css/slick-alpine-theme.css';
 
-import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
-import { PerformanceWidget } from 'widgets';
+// It is important to create Sortable global
+(window as any).Sortable = Sortable;
 
-export const SlickGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
+export const SlickGridPage = () => {
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
+
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<SlickGrid | null>(null);
 
@@ -43,7 +44,7 @@ export const SlickGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount 
     const colWidth = containerSize.width / visibleColumnCount;
     const rowHeight = containerSize.height / visibleRowCount;
 
-    const columns: Column[] = Array.from({ length: TOTAL_COLUMNS }).map((_, i) => ({
+    const columns: Column[] = Array.from({ length: totalColumnCount }).map((_, i) => ({
       id: `col${i}`,
       name: '',
       field: `col${i}`,
@@ -52,9 +53,9 @@ export const SlickGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount 
       sortable: false
     }));
 
-    const data = Array.from({ length: TOTAL_ROWS }).map((_, rowIndex) => {
+    const data = Array.from({ length: totalRowCount }).map((_, rowIndex) => {
       const row: Record<string, string> = { id: `row-${rowIndex}` }; // <-- добавляем id
-      for (let colIndex = 0; colIndex < TOTAL_COLUMNS; colIndex++) {
+      for (let colIndex = 0; colIndex < totalColumnCount; colIndex++) {
         row[`col${colIndex}`] = `R${rowIndex}, C${colIndex}`;
       }
       return row;
@@ -81,7 +82,7 @@ export const SlickGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount 
     return () => {
       grid.destroy();
     };
-  }, [containerSize, visibleRowCount, visibleColumnCount]);
+  }, [containerSize, visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount]);
 
   return (
     <>

@@ -3,16 +3,17 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ClientSideRowModelModule, ColDef, ModuleRegistry } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-
-import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
+
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-export const AgGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
+export const AgGridPage = () => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +35,7 @@ export const AgGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 1
   const colWidth = containerSize.width / visibleColumnCount;
 
   const columnDefs = useMemo<ColDef[]>(() => {
-    return Array.from({ length: TOTAL_COLUMNS }).map((_, index) => ({
+    return Array.from({ length: totalColumnCount }).map((_, index) => ({
       headerName: `C${index}`,
       field: `col${index}`,
       width: colWidth,
@@ -43,9 +44,9 @@ export const AgGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 1
   }, [colWidth]);
 
   const rowData = useMemo(() => {
-    return Array.from({ length: TOTAL_ROWS }).map((_, rowIndex) => {
+    return Array.from({ length: totalRowCount }).map((_, rowIndex) => {
       const row: Record<string, string> = {};
-      for (let colIndex = 0; colIndex < TOTAL_COLUMNS; colIndex++) {
+      for (let colIndex = 0; colIndex < totalColumnCount; colIndex++) {
         row[`col${colIndex}`] = `R${rowIndex}, C${colIndex}`;
       }
       return row;

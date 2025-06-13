@@ -82,6 +82,11 @@ export default [
               position: 'before'
             },
             {
+              pattern: 'context/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
               pattern: 'app/**',
               group: 'internal',
               position: 'before'

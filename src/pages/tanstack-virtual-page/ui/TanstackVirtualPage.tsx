@@ -2,15 +2,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useVirtualizer } from '@tanstack/react-virtual';
 
-import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
-import { VirtualizedPageProps } from 'shared';
+import { useSettings } from 'context';
 import { PerformanceWidget } from 'widgets';
 
-export const TanstackVirtualPage: React.FC<VirtualizedPageProps> = ({
-  visibleRowCount = 10,
-  visibleColumnCount = 10
-}) => {
+export const TanstackVirtualPage = () => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  const { visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount } = useSettings();
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const updateContainerSize = useCallback(() => {
@@ -32,7 +31,7 @@ export const TanstackVirtualPage: React.FC<VirtualizedPageProps> = ({
   const parentRef = containerRef;
 
   const rowVirtualizer = useVirtualizer({
-    count: TOTAL_ROWS,
+    count: totalRowCount,
     getScrollElement: () => parentRef.current,
     estimateSize: () => containerSize.height / visibleRowCount,
     overscan: 5,
@@ -40,7 +39,7 @@ export const TanstackVirtualPage: React.FC<VirtualizedPageProps> = ({
   });
 
   const columnVirtualizer = useVirtualizer({
-    count: TOTAL_COLUMNS,
+    count: totalColumnCount,
     getScrollElement: () => parentRef.current,
     estimateSize: () => containerSize.width / visibleColumnCount,
     overscan: 5,
