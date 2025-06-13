@@ -29,6 +29,7 @@ export default [
       clearInterval: 'readonly',
       requestAnimationFrame: 'readonly',
       cancelAnimationFrame: 'readonly',
+      localStorage: 'readonly'
     },
     ecmaVersion: 2021,
   },
