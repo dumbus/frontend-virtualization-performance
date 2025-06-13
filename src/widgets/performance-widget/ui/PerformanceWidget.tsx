@@ -108,7 +108,7 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
     <div
       style={{
         position: 'fixed',
-        top: 0,
+        top: '64px',
         right: 0,
         width: '240px',
         padding: '10px',

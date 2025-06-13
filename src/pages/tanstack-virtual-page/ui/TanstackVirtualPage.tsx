@@ -4,6 +4,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 export const TanstackVirtualPage: React.FC<VirtualizedPageProps> = ({
   visibleRowCount = 10,
@@ -51,11 +52,13 @@ export const TanstackVirtualPage: React.FC<VirtualizedPageProps> = ({
       ref={containerRef}
       style={{
         width: '100vw',
-        height: '100vh',
+        height: 'calc(100vh - 64px)',
         overflow: 'auto',
         position: 'relative'
       }}
     >
+      <PerformanceWidget updateInterval={100} />
+
       <div
         style={{
           width: columnVirtualizer.getTotalSize(),

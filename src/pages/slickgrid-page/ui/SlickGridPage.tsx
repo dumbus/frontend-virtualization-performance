@@ -10,6 +10,7 @@ import 'slickgrid/dist/styles/css/slick-alpine-theme.css';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 export const SlickGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
   const gridContainerRef = useRef<HTMLDivElement>(null);
@@ -84,12 +85,14 @@ export const SlickGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount 
 
   return (
     <>
+      <PerformanceWidget updateInterval={100} />
+
       <div
         ref={gridContainerRef}
         className="slick-container alpine-theme"
         style={{
           width: '100vw',
-          height: '100vh'
+          height: 'calc(100vh - 64px)'
         }}
       />
       <style>

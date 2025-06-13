@@ -4,6 +4,7 @@ import { HotTable } from '@handsontable/react';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 import 'handsontable/dist/handsontable.full.min.css';
 
@@ -32,7 +33,9 @@ export const HandsontablePage: React.FC<VirtualizedPageProps> = ({ visibleRowCou
   );
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
+      <PerformanceWidget updateInterval={100} />
+
       <HotTable
         data={data}
         width="100%"

@@ -7,6 +7,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -57,9 +58,11 @@ export const AgGridPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 1
       className="ag-theme-alpine"
       style={{
         width: '100vw',
-        height: '100vh'
+        height: 'calc(100vh - 64px)'
       }}
     >
+      <PerformanceWidget updateInterval={100} />
+
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}

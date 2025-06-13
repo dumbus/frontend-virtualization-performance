@@ -4,6 +4,7 @@ import { AutoSizer, Grid } from 'react-virtualized';
 
 import { TOTAL_COLUMNS, TOTAL_ROWS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 export const ReactVirtualizedPage: React.FC<VirtualizedPageProps> = ({
   visibleRowCount = 10,
@@ -36,7 +37,9 @@ export const ReactVirtualizedPage: React.FC<VirtualizedPageProps> = ({
   );
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
+      <PerformanceWidget updateInterval={100} />
+
       <AutoSizer>
         {({ width, height }) => {
           const columnWidth = width / visibleColumnCount;

@@ -7,7 +7,7 @@ import { VirtualizedPageProps } from 'shared';
 import { PerformanceWidget } from 'widgets';
 
 export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
-  const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight - 64 });
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -15,7 +15,7 @@ export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCoun
     if (containerRef.current) {
       setContainerSize({
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight - 64
       });
     }
   }, []);
@@ -49,7 +49,7 @@ export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCoun
       ref={containerRef}
       style={{
         width: '100vw',
-        height: '100vh'
+        height: 'calc(100vh - 64px)'
       }}
     >
       <PerformanceWidget updateInterval={100} />

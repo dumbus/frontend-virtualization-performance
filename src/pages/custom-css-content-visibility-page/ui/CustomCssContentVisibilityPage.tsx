@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { VirtualizedPageProps } from 'shared';
 import { TOTAL_COLUMNS, TOTAL_ROWS } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 export const CustomCssContentVisibilityPage: React.FC<VirtualizedPageProps> = ({
   visibleRowCount = 10,
@@ -84,12 +85,14 @@ export const CustomCssContentVisibilityPage: React.FC<VirtualizedPageProps> = ({
       ref={containerRef}
       style={{
         width: '100vw',
-        height: '100vh',
+        height: 'calc(100vh - 64px)',
         overflow: 'auto',
         position: 'relative'
       }}
       onScroll={handleScroll}
     >
+      <PerformanceWidget updateInterval={100} />
+
       <div
         style={{
           width: totalWidth,

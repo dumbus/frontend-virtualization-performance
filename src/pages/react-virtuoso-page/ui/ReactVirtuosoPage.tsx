@@ -4,6 +4,7 @@ import { Virtuoso } from 'react-virtuoso';
 
 import { TOTAL_ROWS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 export const ReactVirtuosoPage: React.FC<VirtualizedPageProps> = ({
   visibleRowCount = 10,
@@ -25,7 +26,9 @@ export const ReactVirtuosoPage: React.FC<VirtualizedPageProps> = ({
   const rowHeight = containerSize.height / visibleRowCount;
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
+      <PerformanceWidget updateInterval={100} />
+
       <Virtuoso
         totalCount={TOTAL_ROWS}
         style={{ height: '100%', width: '100%' }}

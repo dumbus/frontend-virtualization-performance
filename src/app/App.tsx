@@ -9,12 +9,15 @@ import { SlickGridPage } from 'pages';
 import { TanstackVirtualPage } from 'pages';
 import { CustomCssContentVisibilityPage } from 'pages';
 import { CustomObserverApiPage } from 'pages';
+import { Header } from 'widgets';
 
 import 'styles/styles.scss';
 
 const App = () => {
   return (
     <Router>
+      <Header />
+
       <Routes>
         <Route path="/ag-grid" element={<AgGridPage />} />
         <Route path="/handsontable" element={<HandsontablePage />} />
