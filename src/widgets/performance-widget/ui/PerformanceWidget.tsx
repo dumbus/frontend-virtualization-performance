@@ -14,7 +14,6 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   const lastFrameTime = useRef<number | null>(null);
   const deltas = useRef<number[]>([]);
 
-  // FPS & Jank
   const tick = useCallback((time: number) => {
     if (lastFrameTime.current !== null) {
       const delta = time - lastFrameTime.current;
@@ -25,6 +24,7 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
     rafId.current = requestAnimationFrame(tick);
   }, []);
 
+  // FPS, RAM, DOM-nodes
   useEffect(() => {
     rafId.current = requestAnimationFrame(tick);
 
