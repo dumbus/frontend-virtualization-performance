@@ -8,6 +8,7 @@ export const Header = () => {
   const currentPath = location.pathname.replace(/^\//, '');
 
   const menuItems = [
+    { path: '', label: 'Настройки' },
     { path: 'ag-grid', label: 'ag-grid' },
     { path: 'handsontable', label: 'handsontable' },
     { path: 'react-virtualized', label: 'react-virtualized' },
