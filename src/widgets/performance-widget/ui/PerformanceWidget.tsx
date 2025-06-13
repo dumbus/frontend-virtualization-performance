@@ -7,7 +7,6 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   const [memoryMB, setMemoryMB] = useState<number | null>(null);
   const [domNodes, setDomNodes] = useState(0);
   const [firstRender, setFirstRender] = useState<number | null>(null);
-  const [fullLoad, setFullLoad] = useState<number | null>(null);
   const [inputLatency, setInputLatency] = useState<number | null>(null);
 
   const rafId = useRef<number>(0);
@@ -59,38 +58,6 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
     return () => observer.disconnect();
   }, []);
 
-  // Full Load Time
-  useEffect(() => {
-    const updateFullLoad = () => {
-      const now = performance.now();
-
-      const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-      if (navEntries.length > 0) {
-        const nav = navEntries[0];
-
-        if (nav.loadEventEnd > 0) {
-          setFullLoad(nav.loadEventEnd);
-          return;
-        }
-      }
-
-      const timing = (performance as any).timing;
-      if (timing && timing.loadEventEnd && timing.navigationStart) {
-        setFullLoad(timing.loadEventEnd - timing.navigationStart);
-        return;
-      }
-
-      setFullLoad(now);
-    };
-
-    if (document.readyState === 'complete') {
-      updateFullLoad();
-    } else {
-      window.addEventListener('load', updateFullLoad);
-      return () => window.removeEventListener('load', updateFullLoad);
-    }
-  }, []);
-
   // Input Latency Test
   useEffect(() => {
     const handler = () => {
@@ -124,8 +91,7 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
       <div>FPS: {fps.toFixed(2)}</div>
       <div>Memory: {memoryMB !== null ? memoryMB.toFixed(2) + ' MB' : 'N/A'}</div>
       <div>DOM Nodes: {domNodes}</div>
-      <div>First Render: {firstRender !== null ? firstRender.toFixed(2) + ' ms' : 'N/A'}</div>
-      <div>Full Load: {fullLoad !== null ? fullLoad.toFixed(2) + ' ms' : 'N/A'}</div>
+      <div>First Render Time: {firstRender !== null ? firstRender.toFixed(2) + ' ms' : 'N/A'}</div>
       <div>Input Latency: {inputLatency !== null ? inputLatency.toFixed(2) + ' ms' : 'Click to test'}</div>
     </div>
   );
