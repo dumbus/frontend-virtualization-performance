@@ -4,6 +4,7 @@ import { VariableSizeGrid as Grid } from 'react-window';
 
 import { TOTAL_ROWS, TOTAL_COLUMNS } from 'shared';
 import { VirtualizedPageProps } from 'shared';
+import { PerformanceWidget } from 'widgets';
 
 export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCount = 10, visibleColumnCount = 10 }) => {
   const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
@@ -51,6 +52,8 @@ export const ReactWindowPage: React.FC<VirtualizedPageProps> = ({ visibleRowCoun
         height: '100vh'
       }}
     >
+      <PerformanceWidget updateInterval={100} />
+
       <Grid
         columnCount={TOTAL_COLUMNS}
         rowCount={TOTAL_ROWS}

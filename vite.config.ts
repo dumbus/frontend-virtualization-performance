@@ -7,9 +7,11 @@ export default defineConfig({
   resolve: {
     alias: {
       app: '/src/app',
+      features: '/src/features',
       pages: '/src/pages',
       shared: '/src/shared',
-      styles: '/src/styles'
+      styles: '/src/styles',
+      widgets: '/src/widgets'
     }
   }
 });

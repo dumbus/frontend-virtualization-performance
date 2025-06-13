@@ -22,6 +22,13 @@ export default [
     globals: {
       window: 'readonly',
       document: 'readonly',
+      performance: 'readonly',
+      console: 'readonly',
+      setInterval: 'readonly',
+      setTimeout: 'readonly',
+      clearInterval: 'readonly',
+      requestAnimationFrame: 'readonly',
+      cancelAnimationFrame: 'readonly',
     },
     ecmaVersion: 2021,
   },
@@ -80,6 +87,11 @@ export default [
               position: 'before'
             },
             {
+              pattern: 'features/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
               pattern: 'pages/**',
               group: 'internal',
               position: 'before'
@@ -91,6 +103,11 @@ export default [
             },
             {
               pattern: 'styles/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'widgets/**',
               group: 'internal',
               position: 'before'
             },

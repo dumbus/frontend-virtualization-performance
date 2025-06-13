@@ -16,28 +16,16 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/ag-grid" element={<AgGridPage visibleColumnCount={10} visibleRowCount={10} />} />
-        <Route path="/handsontable" element={<HandsontablePage visibleColumnCount={10} visibleRowCount={10} />} />
-        <Route
-          path="/react-virtualized"
-          element={<ReactVirtualizedPage visibleColumnCount={10} visibleRowCount={10} />}
-        />
-        <Route path="/react-virtuoso" element={<ReactVirtuosoPage visibleColumnCount={10} visibleRowCount={10} />} />
-        <Route path="/react-window" element={<ReactWindowPage visibleColumnCount={10} visibleRowCount={10} />} />
-        <Route path="/slickgrid" element={<SlickGridPage visibleColumnCount={10} visibleRowCount={10} />} />
-        <Route
-          path="/tanstack-virtual"
-          element={<TanstackVirtualPage visibleColumnCount={10} visibleRowCount={10} />}
-        />
+        <Route path="/ag-grid" element={<AgGridPage />} />
+        <Route path="/handsontable" element={<HandsontablePage />} />
+        <Route path="/react-virtualized" element={<ReactVirtualizedPage />} />
+        <Route path="/react-virtuoso" element={<ReactVirtuosoPage />} />
+        <Route path="/react-window" element={<ReactWindowPage />} />
+        <Route path="/slickgrid" element={<SlickGridPage />} />
+        <Route path="/tanstack-virtual" element={<TanstackVirtualPage />} />
 
-        <Route
-          path="/css-content-visibility"
-          element={<CustomCssContentVisibilityPage visibleColumnCount={10} visibleRowCount={10} />}
-        />
-        <Route
-          path="/custom-observer-api"
-          element={<CustomObserverApiPage visibleColumnCount={10} visibleRowCount={10} />}
-        />
+        <Route path="/css-content-visibility" element={<CustomCssContentVisibilityPage />} />
+        <Route path="/custom-observer-api" element={<CustomObserverApiPage />} />
       </Routes>
     </Router>
   );
