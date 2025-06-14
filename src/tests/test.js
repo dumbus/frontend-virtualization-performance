@@ -1,5 +1,10 @@
 import puppeteer from 'puppeteer';
 
+const args = process.argv.slice(2);
+const repeatsCount = parseInt(args[0], 10) || 1;
+
+// TODO: Добавить возможность тестировать одну технологию на разных настройках
+// TODO: Добавить визуальное сравнение технологий (графики)
 (async () => {
   const browser = await puppeteer.launch({
     headless: false,
@@ -16,16 +21,31 @@ import puppeteer from 'puppeteer';
     }))
   );
 
-  for (let i = 1; i < headerLinks.length; i++) {
-    const { href, text } = headerLinks[i];
+  const allMetrics = [];
 
-    console.log(`Переход по: [${text}] ${href}`);
+  for (let repeat = 1; repeat <= repeatsCount; repeat++) {
+    console.log(`\nПовтор ${repeat} из ${repeatsCount}`);
 
-    await collectPageMetrics(page, href);
-    await wait(500);
+    for (let i = 1; i < headerLinks.length; i++) {
+      const { href, text } = headerLinks[i];
+      console.log(`Переход по: [${text}] ${href}`);
+
+      const metrics = await collectPageMetrics(page, href);
+
+      allMetrics.push({
+        repeat,
+        page: href,
+        metrics
+      });
+
+      await wait(500);
+    }
   }
 
   await browser.close();
+
+  console.log('\nВсе метрики собраны:');
+  summarizeMetricsByPage(allMetrics);
 })();
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -82,6 +102,36 @@ const collectPageMetrics = async (page, href) => {
     await wait(5);
   }
 
-  console.log(`Метрики для "${href}":`);
-  console.table(metrics);
+  return metrics;
 };
+
+function summarizeMetricsByPage(allMetrics) {
+  const pageGroups = {};
+
+  for (const { page, metrics } of allMetrics) {
+    if (!pageGroups[page]) pageGroups[page] = [];
+    pageGroups[page].push(...metrics);
+  }
+
+  const summary = [];
+
+  for (const [page, metrics] of Object.entries(pageGroups)) {
+    const avg = (key) => {
+      const values = metrics.map((m) => m[key]).filter((v) => typeof v === 'number');
+      const sum = values.reduce((acc, v) => acc + v, 0);
+
+      return values.length > 0 ? sum / values.length : null;
+    };
+
+    summary.push({
+      page,
+      avgFPS: avg('fps')?.toFixed(2),
+      avgMemoryMB: avg('memoryMB')?.toFixed(2),
+      avgDOMNodes: avg('domNodes')?.toFixed(0),
+      avgFirstRender: avg('firstRender')?.toFixed(2)
+    });
+  }
+
+  console.log('\nСредние значения метрик по каждой технологии:');
+  console.table(summary);
+}
