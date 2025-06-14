@@ -49,6 +49,7 @@ export const TanstackVirtualPage = () => {
   return (
     <div
       ref={containerRef}
+      className="page-container"
       style={{
         width: '100vw',
         height: 'calc(100vh - 64px)',

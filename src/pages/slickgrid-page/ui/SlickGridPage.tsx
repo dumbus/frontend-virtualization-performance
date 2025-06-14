@@ -54,7 +54,8 @@ export const SlickGridPage = () => {
     }));
 
     const data = Array.from({ length: totalRowCount }).map((_, rowIndex) => {
-      const row: Record<string, string> = { id: `row-${rowIndex}` }; // <-- добавляем id
+      const row: Record<string, string> = { id: `row-${rowIndex}` };
+
       for (let colIndex = 0; colIndex < totalColumnCount; colIndex++) {
         row[`col${colIndex}`] = `R${rowIndex}, C${colIndex}`;
       }
@@ -85,7 +86,13 @@ export const SlickGridPage = () => {
   }, [containerSize, visibleRowCount, visibleColumnCount, totalRowCount, totalColumnCount]);
 
   return (
-    <>
+    <div
+      className="page-container"
+      style={{
+        width: '100vw',
+        height: 'calc(100vh - 64px)'
+      }}
+    >
       <PerformanceWidget updateInterval={100} />
 
       <div
@@ -103,6 +110,6 @@ export const SlickGridPage = () => {
           }
         `}
       </style>
-    </>
+    </div>
   );
 };

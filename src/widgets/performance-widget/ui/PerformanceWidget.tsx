@@ -7,7 +7,7 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   const [memoryMB, setMemoryMB] = useState<number | null>(null);
   const [domNodes, setDomNodes] = useState(0);
   const [firstRender, setFirstRender] = useState<number | null>(null);
-  const [inputLatency, setInputLatency] = useState<number | null>(null);
+  // const [inputLatency, setInputLatency] = useState<number | null>(null);
 
   const rafId = useRef<number>(0);
   const lastFrameTime = useRef<number | null>(null);
@@ -59,17 +59,17 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   }, []);
 
   // Input Latency Test
-  useEffect(() => {
-    const handler = () => {
-      const start = performance.now();
-      requestAnimationFrame(() => {
-        const end = performance.now();
-        setInputLatency(end - start);
-      });
-    };
-    window.addEventListener('click', handler);
-    return () => window.removeEventListener('click', handler);
-  }, []);
+  // useEffect(() => {
+  //   const handler = () => {
+  //     const start = performance.now();
+  //     requestAnimationFrame(() => {
+  //       const end = performance.now();
+  //       setInputLatency(end - start);
+  //     });
+  //   };
+  //   window.addEventListener('click', handler);
+  //   return () => window.removeEventListener('click', handler);
+  // }, []);
 
   return (
     <div
@@ -88,11 +88,15 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
         pointerEvents: 'none'
       }}
     >
-      <div>FPS: {fps.toFixed(2)}</div>
-      <div>Memory: {memoryMB !== null ? memoryMB.toFixed(2) + ' MB' : 'N/A'}</div>
-      <div>DOM Nodes: {domNodes}</div>
-      <div>First Render Time: {firstRender !== null ? firstRender.toFixed(2) + ' ms' : 'N/A'}</div>
-      <div>Input Latency: {inputLatency !== null ? inputLatency.toFixed(2) + ' ms' : 'Click to test'}</div>
+      <div id="fps">FPS: {fps.toFixed(2)}</div>
+      <div id="memory">Memory: {memoryMB !== null ? memoryMB.toFixed(2) + ' MB' : 'N/A'}</div>
+      <div id="dom-nodes">DOM Nodes: {domNodes}</div>
+      <div id="first-render-time">
+        First Render Time: {firstRender !== null ? firstRender.toFixed(2) + ' ms' : 'N/A'}
+      </div>
+      {/* <div id="input-latency">
+        Input Latency: {inputLatency !== null ? inputLatency.toFixed(2) + ' ms' : 'Click to test'}
+      </div> */}
     </div>
   );
 };

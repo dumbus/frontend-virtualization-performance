@@ -12,6 +12,7 @@ export default defineConfig({
       pages: '/src/pages',
       shared: '/src/shared',
       styles: '/src/styles',
+      tests: '/src/tests',
       widgets: '/src/widgets'
     }
   }

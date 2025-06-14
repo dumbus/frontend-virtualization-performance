@@ -33,6 +33,7 @@ export const Header = () => {
     >
       {menuItems.map((item) => (
         <a
+          className="menu-link"
           key={item.path}
           href={`/${item.path}`}
           style={{

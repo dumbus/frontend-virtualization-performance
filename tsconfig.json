@@ -29,9 +29,10 @@
       "pages/*": ["pages/*"],
       "shared/*": ["shared/*"],
       "styles/*": ["styles/*"],
+      "tests/*": ["src/tests/*"],
       "widgets/*": ["widgets/*"],
     }
   },
-  "include": ["src", "vite.config.ts", "eslint.config.js"],
+  "include": ["src", "vite.config.ts", "eslint.config.js", "tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

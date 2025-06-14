@@ -34,7 +34,7 @@ export const HandsontablePage = () => {
   );
 
   return (
-    <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
+    <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }} className="page-container">
       <PerformanceWidget updateInterval={100} />
 
       <HotTable

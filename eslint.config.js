@@ -113,6 +113,11 @@ export default [
               position: 'before'
             },
             {
+              pattern: 'tests/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
               pattern: 'widgets/**',
               group: 'internal',
               position: 'before'

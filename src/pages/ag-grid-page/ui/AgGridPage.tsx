@@ -56,7 +56,7 @@ export const AgGridPage = () => {
   return (
     <div
       ref={containerRef}
-      className="ag-theme-alpine"
+      className="page-container ag-theme-alpine"
       style={{
         width: '100vw',
         height: 'calc(100vh - 64px)'
