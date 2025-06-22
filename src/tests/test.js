@@ -64,7 +64,8 @@ const collectMetrics = async (page, metrics) => {
       fps: getNumber('fps'),
       memoryMB: getNumber('memory'),
       domNodes: getNumber('dom-nodes'),
-      firstRender: getNumber('first-render-time')
+      fcp: getNumber('fcp'),
+      unputLatency: getNumber('input-latency')
     };
   });
 
@@ -98,6 +99,7 @@ const collectPageMetrics = async (page, href) => {
   for (let i = 0; i < steps; i++) {
     await page.mouse.wheel({ deltaY: delta });
     await page.mouse.wheel({ deltaX: delta });
+    await page.mouse.click(centerX, centerY);
     await collectMetrics(page, metrics);
     await wait(5);
   }
@@ -128,7 +130,8 @@ function summarizeMetricsByPage(allMetrics) {
       avgFPS: avg('fps')?.toFixed(2),
       avgMemoryMB: avg('memoryMB')?.toFixed(2),
       avgDOMNodes: avg('domNodes')?.toFixed(0),
-      avgFirstRender: avg('firstRender')?.toFixed(2)
+      avgFCP: avg('fcp')?.toFixed(2),
+      avgInputLatency: avg('unputLatency')?.toFixed(2)
     });
   }
 

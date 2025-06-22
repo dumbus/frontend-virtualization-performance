@@ -6,8 +6,8 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   const [fps, setFps] = useState(0);
   const [memoryMB, setMemoryMB] = useState<number | null>(null);
   const [domNodes, setDomNodes] = useState(0);
-  const [firstRender, setFirstRender] = useState<number | null>(null);
-  // const [inputLatency, setInputLatency] = useState<number | null>(null);
+  const [fcp, setFcp] = useState<number | null>(null);
+  const [inputLatency, setInputLatency] = useState<number | null>(null);
 
   const rafId = useRef<number>(0);
   const lastFrameTime = useRef<number | null>(null);
@@ -51,7 +51,7 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   useEffect(() => {
     const observer = new PerformanceObserver((list) => {
       const entry = list.getEntriesByName('first-contentful-paint')[0];
-      if (entry) setFirstRender(entry.startTime);
+      if (entry) setFcp(entry.startTime);
     });
 
     observer.observe({ type: 'paint', buffered: true });
@@ -59,17 +59,17 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
   }, []);
 
   // Input Latency Test
-  // useEffect(() => {
-  //   const handler = () => {
-  //     const start = performance.now();
-  //     requestAnimationFrame(() => {
-  //       const end = performance.now();
-  //       setInputLatency(end - start);
-  //     });
-  //   };
-  //   window.addEventListener('click', handler);
-  //   return () => window.removeEventListener('click', handler);
-  // }, []);
+  useEffect(() => {
+    const handler = () => {
+      const start = performance.now();
+      requestAnimationFrame(() => {
+        const end = performance.now();
+        setInputLatency(end - start);
+      });
+    };
+    window.addEventListener('click', handler);
+    return () => window.removeEventListener('click', handler);
+  }, []);
 
   return (
     <div
@@ -77,7 +77,7 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
         position: 'fixed',
         top: '64px',
         right: 0,
-        width: '240px',
+        width: '300px',
         padding: '10px',
         background: 'rgba(0,0,0,0.75)',
         color: 'white',
@@ -91,12 +91,10 @@ export const PerformanceWidget: React.FC<PerformanceWidgetProps> = ({ updateInte
       <div id="fps">FPS: {fps.toFixed(2)}</div>
       <div id="memory">Memory: {memoryMB !== null ? memoryMB.toFixed(2) + ' MB' : 'N/A'}</div>
       <div id="dom-nodes">DOM Nodes: {domNodes}</div>
-      <div id="first-render-time">
-        First Render Time: {firstRender !== null ? firstRender.toFixed(2) + ' ms' : 'N/A'}
-      </div>
-      {/* <div id="input-latency">
+      <div id="fcp">First Contentful Paint: {fcp !== null ? fcp.toFixed(2) + ' ms' : 'N/A'}</div>
+      <div id="input-latency">
         Input Latency: {inputLatency !== null ? inputLatency.toFixed(2) + ' ms' : 'Click to test'}
-      </div> */}
+      </div>
     </div>
   );
 };
