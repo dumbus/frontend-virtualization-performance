@@ -22,6 +22,15 @@ export default [
     globals: {
       window: 'readonly',
       document: 'readonly',
+      performance: 'readonly',
+      console: 'readonly',
+      setInterval: 'readonly',
+      setTimeout: 'readonly',
+      clearInterval: 'readonly',
+      requestAnimationFrame: 'readonly',
+      cancelAnimationFrame: 'readonly',
+      localStorage: 'readonly',
+      process: 'readonly'
     },
     ecmaVersion: 2021,
   },
@@ -75,6 +84,46 @@ export default [
               position: 'before'
             },
             {
+              pattern: 'context/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: 'app/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'features/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'pages/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'shared/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'styles/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'tests/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: 'widgets/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
               pattern: './**/*.module.scss',
               group: 'sibling',
               position: 'after'
@@ -83,11 +132,6 @@ export default [
               pattern: '**/*.scss',
               group: 'index',
               position: 'after'
-            },
-            {
-              pattern: 'app/**',
-              group: 'internal',
-              position: 'before'
             }
           ],
           pathGroupsExcludedImportTypes: ['react'],
@@ -95,8 +139,7 @@ export default [
             order: 'asc',
             caseInsensitive: true
           },
-          'newlines-between': 'always',
-          warnOnUnassignedImports: true
+          'newlines-between': 'always'
         }
       ]
     },
@@ -104,11 +147,14 @@ export default [
       'import/parsers': {
         '@typescript-eslint/parser': ['.ts', '.tsx']
       },
-      // 'import/resolver': {
-      //   typescript: {
-      //     project: path.join(__dirname, 'tsconfig.json')
-      //   }
-      // },
+      'import/resolver': {
+        typescript: {
+          project: [
+            path.join(__dirname, 'tsconfig.json'),
+          ],
+          alwaysTryTypes: true,
+        }
+      },
       react: {
         version: 'detect'
       }
