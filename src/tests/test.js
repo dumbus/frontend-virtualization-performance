@@ -94,7 +94,7 @@ const collectPageMetrics = async (page, href) => {
   await page.mouse.move(centerX, centerY);
 
   const steps = 50;
-  const delta = 1000;
+  const delta = 500;
 
   for (let i = 0; i < steps; i++) {
     await page.mouse.wheel({ deltaY: delta });
