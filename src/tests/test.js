@@ -1,7 +1,68 @@
 import puppeteer from 'puppeteer';
 
-const args = process.argv.slice(2);
-const repeatsCount = parseInt(args[0], 10) || 1;
+const parseArgs = () => {
+  const args = process.argv.slice(2);
+  const config = {
+    repeatsCount: 1,
+    visibleRows: null,
+    visibleColumns: null
+  };
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    const nextArg = args[i + 1];
+
+    // Поддержка формата с = (-r=2, -vr=10)
+    if (arg.includes('=')) {
+      const [flag, value] = arg.split('=');
+      const numValue = parseInt(value, 10);
+
+      if ((flag === '--repeats' || flag === '-r') && !isNaN(numValue)) {
+        config.repeatsCount = numValue;
+        continue;
+      } else if ((flag === '--visible-rows' || flag === '-vr') && !isNaN(numValue)) {
+        config.visibleRows = numValue;
+        continue;
+      } else if ((flag === '--visible-columns' || flag === '-vc') && !isNaN(numValue)) {
+        config.visibleColumns = numValue;
+        continue;
+      }
+    }
+
+    // Поддержка формата с раздельными аргументами (-r 2, -vr 10)
+    if (arg === '--repeats' || arg === '-r') {
+      if (nextArg && !isNaN(parseInt(nextArg, 10))) {
+        config.repeatsCount = parseInt(nextArg, 10);
+        i++;
+      }
+    } else if (arg === '--visible-rows' || arg === '-vr') {
+      if (nextArg && !isNaN(parseInt(nextArg, 10))) {
+        config.visibleRows = parseInt(nextArg, 10);
+        i++;
+      }
+    } else if (arg === '--visible-columns' || arg === '-vc') {
+      if (nextArg && !isNaN(parseInt(nextArg, 10))) {
+        config.visibleColumns = parseInt(nextArg, 10);
+        i++;
+      }
+    } else if (!isNaN(parseInt(arg, 10)) && i === 0) {
+      // Поддержка старого формата: первый аргумент без флага = количество повторов
+      config.repeatsCount = parseInt(arg, 10) || 1;
+    }
+  }
+
+  return config;
+};
+
+const config = parseArgs();
+
+console.log('Конфигурация теста:');
+console.log(`  Количество повторов: ${config.repeatsCount}`);
+console.log(`  Количество видимых рядов: ${config.visibleRows !== null ? config.visibleRows : 'по умолчанию (20)'}`);
+console.log(
+  `  Количество видимых столбцов: ${config.visibleColumns !== null ? config.visibleColumns : 'по умолчанию (20)'}`
+);
+console.log('');
 
 // TODO: Добавить возможность тестировать одну технологию на разных настройках
 // TODO: Добавить визуальное сравнение технологий (графики)
@@ -14,6 +75,26 @@ const repeatsCount = parseInt(args[0], 10) || 1;
   const page = await browser.newPage();
   await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' });
 
+  // Установка настроек через localStorage перед началом тестирования
+  if (config.visibleRows !== null || config.visibleColumns !== null) {
+    await page.evaluate(
+      (settings) => {
+        const stored = JSON.parse(localStorage.getItem('gridSettings') || '{}');
+        const updated = {
+          ...stored,
+          ...(settings.visibleRows !== null && { visibleRowCount: settings.visibleRows }),
+          ...(settings.visibleColumns !== null && { visibleColumnCount: settings.visibleColumns })
+        };
+        localStorage.setItem('gridSettings', JSON.stringify(updated));
+      },
+      { visibleRows: config.visibleRows, visibleColumns: config.visibleColumns }
+    );
+
+    // Перезагружаем страницу, чтобы применить настройки
+    await page.reload({ waitUntil: 'networkidle0' });
+    console.log('Настройки применены через localStorage\n');
+  }
+
   const headerLinks = await page.$$eval('.menu-link', (links) =>
     links.map((link) => ({
       text: (link.textContent || '').trim(),
@@ -23,8 +104,8 @@ const repeatsCount = parseInt(args[0], 10) || 1;
 
   const allMetrics = [];
 
-  for (let repeat = 1; repeat <= repeatsCount; repeat++) {
-    console.log(`\nПовтор ${repeat} из ${repeatsCount}`);
+  for (let repeat = 1; repeat <= config.repeatsCount; repeat++) {
+    console.log(`\nПовтор ${repeat} из ${config.repeatsCount}`);
 
     for (let i = 1; i < headerLinks.length; i++) {
       const { href, text } = headerLinks[i];

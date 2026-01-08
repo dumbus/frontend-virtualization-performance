@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
-    "test": "ts-node ./src/tests/test.js",
+    "test": "ts-node -- ./src/tests/test.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
