@@ -1,54 +1,248 @@
-# React + TypeScript + Vite
+# Экспериментальный стенд для исследования производительности технологий виртуализации табличных компонентов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![react version](https://img.shields.io/badge/react-19.1.0-blue)
+![react-router-dom version](https://img.shields.io/badge/react--router--dom-7.6.2-blue)
+![typescript version](https://img.shields.io/badge/typescript-5.8.3-blue)
+![sass version](https://img.shields.io/badge/sass-1.89.0-blue)
+![vite version](https://img.shields.io/badge/vite-6.3.5-brightgreen)
+![puppeteer version](https://img.shields.io/badge/puppeteer-24.10.1-brightgreen)
 
-Currently, two official plugins are available:
+![ag-grid version](https://img.shields.io/badge/ag--grid-33.3.2-green)
+![react-virtualized version](https://img.shields.io/badge/react--virtualized-9.22.6-green)
+![react-window version](https://img.shields.io/badge/react--window-1.8.11-green)
+![react-virtuoso version](https://img.shields.io/badge/react--virtuoso-4.12.8-green)
+![tanstack-virtual version](https://img.shields.io/badge/tanstack--virtual-3.13.10-green)
+![handsontable version](https://img.shields.io/badge/handsontable-15.3.0-green)
+![slickgrid version](https://img.shields.io/badge/slickgrid-5.15.4-green)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Экспериментальный стенд для ВКР на тему **"Исследование производительности технологий виртуализации табличных компонентов в контексте веб-интерфейсов BI-систем"**.
 
-## Expanding the ESLint configuration
+Стенд позволяет сравнивать различные технологии виртуализации таблиц по различным метрикам производительности и получать интегральную оценку эффективности каждой технологии.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📋 Описание
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Проект представляет собой веб-приложение, реализующее одинаковую функциональность (большая таблица с данными) с использованием различных библиотек и подходов виртуализации. Каждая технология тестируется в одинаковых условиях, что позволяет объективно сравнить их производительность.
+
+## 🎯 Основные возможности стенда
+
+1. **Интерактивное тестирование** — визуальное сравнение технологий в браузере с виджетом производительности в реальном времени
+2. **Автоматизированное тестирование** — скрипт на Puppeteer для сбора метрик производительности
+3. **Настраиваемые параметры** — возможность изменить количество видимых строк/столбцов и общий размер таблицы
+4. **Интегральный показатель BIPI** — автоматический расчет комплексной оценки производительности
+
+## 🛠 Технологии виртуализации
+
+Стенд включает следующие технологии виртуализации табличных компонентов:
+
+1. **AG Grid** — полнофункциональная библиотека для работы с таблицами с встроенной виртуализацией
+2. **React Virtualized** — классическая библиотека виртуализации для React
+3. **React Window** — легковесная библиотека-преемник React Virtualized
+4. **React Virtuoso** — современная библиотека виртуализации с расширенными возможностями
+5. **TanStack Virtual** — универсальная библиотека виртуализации от создателей React Query
+6. **Handsontable** — библиотека для создания таблиц типа Excel с виртуализацией
+7. **SlickGrid** — быстрая библиотека для больших таблиц
+
+## 📊 Метрики производительности
+
+Стенд измеряет следующие метрики для каждой технологии:
+
+- **FPS (Frames Per Second)** — частота кадров, показатель плавности анимации и скроллинга
+- **Memory (MB)** — использование оперативной памяти (JS Heap Size)
+- **DOM Nodes** — количество DOM-узлов в документе
+- **FCP (First Contentful Paint)** — время до первого отображения контента
+- **Input Latency** — задержка обработки пользовательского ввода (клики, взаимодействия)
+
+Все метрики отображаются в реальном времени в виджете производительности, расположенном в правом верхнем углу интерфейса.
+
+## 📈 Интегральный показатель BIPI (BI Performance Index)
+
+Для комплексной оценки производительности используется интегральный показатель **BIPI (BI Performance Index)**, который учитывает все измеряемые метрики с различными весовыми коэффициентами:
+
+- **FPS**: 25% (высокая важность для плавности интерфейса)
+- **Input Latency**: 25% (критично для отзывчивости)
+- **Memory (MB)**: 20% (важно для масштабируемости)
+- **DOM Nodes**: 20% (влияет на производительность рендеринга)
+- **FCP**: 10% (важно для первоначальной загрузки)
+
+Метрики нормализуются в диапазоне от 0 до 1 на основе минимальных и максимальных значений среди всех технологий, после чего вычисляется взвешенная сумма. Чем выше значение BIPI, тем лучше общая производительность технологии.
+
+## 🚀 Установка и запуск
+
+### Требования
+
+- Node.js 18+ 
+- npm или yarn
+
+### Установка зависимостей
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Запуск приложения в режиме разработки
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm start
 ```
+
+Приложение будет доступно по адресу `http://localhost:5173/`
+
+### Сборка для production
+
+```bash
+npm run build
+```
+
+### Запуск автоматизированных тестов
+
+Перед запуском тестов убедитесь, что приложение запущено на `http://localhost:5173/`:
+
+```bash
+# В одном терминале запустите приложение
+npm start
+
+# В другом терминале запустите тесты
+npm run test
+```
+
+## 🔧 Параметры автоматизированного тестирования
+
+Скрипт автоматизированного тестирования поддерживает следующие аргументы командной строки:
+
+### Синтаксис
+
+```bash
+npm run test -- [аргументы]
+```
+
+### Доступные аргументы
+
+#### Количество повторов (`--repeats` / `-r`)
+
+Количество раз, которое тест пройдет по всем технологиям. Полезно для получения статистически значимых результатов.
+
+**Примеры:**
+```bash
+npm run test -- -r 3
+npm run test -- --repeats 5
+npm run test 3  # Старый формат (только число = количество повторов)
+```
+
+#### Количество видимых строк (`--visible-rows` / `-vr`)
+
+Устанавливает количество одновременно видимых строк в таблице.
+
+**Примеры:**
+```bash
+npm run test -- -vr 30
+npm run test -- --visible-rows 15
+npm run test -- -vr=25  # Формат с =
+```
+
+#### Количество видимых столбцов (`--visible-columns` / `-vc`)
+
+Устанавливает количество одновременно видимых столбцов в таблице.
+
+**Примеры:**
+```bash
+npm run test -- -vc 30
+npm run test -- --visible-columns 15
+npm run test -- -vc=25  # Формат с =
+```
+
+### Комбинированное использование
+
+Все параметры можно комбинировать:
+
+```bash
+# Полный пример с всеми параметрами
+npm run test -- -r 3 -vr 25 -vc 25
+
+# С длинными флагами
+npm run test -- --repeats 2 --visible-rows 20 --visible-columns 20
+
+# С форматом =
+npm run test -- -r=2 -vr=30 -vc=30
+
+# Частичная настройка
+npm run test -- -r 5 -vr 15
+```
+
+### Параметры по умолчанию
+
+Если параметры не указаны:
+- **Количество повторов**: 1
+- **Видимые строки**: 20 (из `src/shared/constants.ts`)
+- **Видимые столбцы**: 20 (из `src/shared/constants.ts`)
+
+### Что делает скрипт тестирования
+
+1. Открывает браузер через Puppeteer
+2. Устанавливает настройки видимых строк/столбцов
+3. Проходит по всем страницам с различными технологиями виртуализации
+4. Выполняет 50 шагов взаимодействия на каждой странице (скроллинг, клики)
+5. Собирает метрики производительности на каждом шаге
+6. Вычисляет средние значения метрик для каждой технологии
+7. Рассчитывает интегральный показатель BIPI
+8. Выводит результаты в виде таблиц в консоль
+
+## 🔬 Ручное тестирование с помощью интерфейса
+
+### Настройка параметров таблицы
+
+На главной странице доступны настройки для изменения параметров таблицы:
+
+- **Количество видимых строк** — количество одновременно отображаемых строк
+- **Количество видимых столбцов** — количество одновременно отображаемых столбцов
+- **Общее количество строк** — размер набора данных (по умолчанию 1000)
+- **Общее количество столбцов** — количество столбцов в наборе данных (по умолчанию 1000)
+
+Настройки сохраняются в localStorage и применяются ко всем технологиям виртуализации.
+
+### Виджет производительности
+
+В правом верхнем углу находится виджет производительности, отображающий в реальном времени:
+
+- Текущий FPS
+- Использование памяти
+- Количество DOM-узлов
+- Время First Contentful Paint
+- Задержка обработки ввода (обновляется при клике)
+
+### Навигация
+
+Используйте меню навигации для переключения между различными технологиями виртуализации и их сравнения.
+
+## 📁 Структура проекта
+
+```
+src/
+├── pages/                   # Страницы с различными технологиями виртуализации
+│   ├── ag-grid-page/
+│   ├── react-virtualized-page/
+│   ├── react-window-page/
+│   ├── react-virtuoso-page/
+│   ├── tanstack-virtual-page/
+│   ├── handsontable-page/
+│   └── slickgrid-page/
+├── tests/                   # Автоматизированные тесты
+│   └── test.js
+├── widgets/                 # Компоненты приложения
+│   ├── header/              # Навигация
+│   └── performance-widget/  # Виджет производительности
+├── shared/                  # Общие константы и утилиты
+│   └── constants.ts         # VISIBLE_ROWS, VISIBLE_COLUMNS, TOTAL_ROWS, TOTAL_COLUMNS
+└── context/                 # React Context для настроек
+    └── settingsContext.tsx
+```
+
+## 📝 Результаты тестирования
+
+После завершения автоматизированного тестирования в консоли выводятся:
+
+1. **Средние значения метрик** — таблица со средними значениями всех метрик для каждой технологии
+2. **BIPI (BI Performance Index)** — таблица с интегральными показателями, отсортированная по убыванию (лучшие технологии вверху)
+
+Результаты можно использовать для:
+- Сравнения технологий в конкретных условиях использования
+- Выбора оптимальной технологии для конкретной задачи
