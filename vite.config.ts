@@ -1,8 +1,10 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
+const githubPagesBase = '/frontend-virtualization-performance/';
+
 export default defineConfig({
-  base: '/',
+  base: process.env.GITHUB_ACTIONS ? githubPagesBase : '/',
   plugins: [react()],
   resolve: {
     alias: {

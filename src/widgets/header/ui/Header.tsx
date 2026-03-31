@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
   const location = useLocation();
@@ -32,10 +30,10 @@ export const Header = () => {
       }}
     >
       {menuItems.map((item) => (
-        <a
+        <Link
           className="menu-link"
           key={item.path}
-          href={`/${item.path}`}
+          to={`/${item.path}`}
           style={{
             color: currentPath === item.path ? '#1890ff' : '#333',
             fontWeight: currentPath === item.path ? 'bold' : 'normal',
@@ -47,7 +45,7 @@ export const Header = () => {
           }}
         >
           {item.label}
-        </a>
+        </Link>
       ))}
     </div>
   );

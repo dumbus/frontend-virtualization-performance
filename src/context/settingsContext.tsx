@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 import { TOTAL_COLUMNS, TOTAL_ROWS, VISIBLE_COLUMNS, VISIBLE_ROWS } from 'shared';
 

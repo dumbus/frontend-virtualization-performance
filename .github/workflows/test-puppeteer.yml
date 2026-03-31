@@ -1,0 +1,61 @@
+name: Run Puppeteer Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build
+
+      - name: Start preview server
+        run: nohup npm run preview -- --host 127.0.0.1 --port 5173 > preview.log 2>&1 &
+
+      - name: Wait for app to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://127.0.0.1:5173 > /dev/null; then
+              echo "App is ready"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "App did not start in time"
+          cat preview.log
+          exit 1
+
+      - name: Run Puppeteer scenario
+        env:
+          CI: true
+          APP_URL: http://127.0.0.1:5173/
+        run: npm run test 2>&1 | tee test-report.log
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: puppeteer-test-report
+          path: test-report.log
+          if-no-files-found: ignore
