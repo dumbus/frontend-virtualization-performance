@@ -55,6 +55,8 @@ const parseArgs = () => {
 };
 
 const config = parseArgs();
+const isCI = process.env.CI === 'true';
+const appUrl = process.env.APP_URL || 'http://localhost:5173/';
 
 console.log('Конфигурация теста:');
 console.log(`  Количество повторов: ${config.repeatsCount}`);
@@ -68,12 +70,13 @@ console.log('');
 // TODO: Добавить визуальное сравнение технологий (графики)
 (async () => {
   const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: null
+    headless: isCI ? true : false,
+    defaultViewport: null,
+    args: isCI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
   });
 
   const page = await browser.newPage();
-  await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' });
+  await page.goto(appUrl, { waitUntil: 'networkidle0' });
 
   // Установка настроек через localStorage перед началом тестирования
   if (config.visibleRows !== null || config.visibleColumns !== null) {
