@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SlickGrid, SlickDataView, Column, GridOption } from 'slickgrid';
 import Sortable from 'sortablejs';
