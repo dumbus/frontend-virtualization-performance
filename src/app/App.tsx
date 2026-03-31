@@ -18,7 +18,7 @@ import 'styles/styles.scss';
 const App = () => {
   return (
     <SettingsContextProvider>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <Header />
 
         <Routes>
