@@ -57,7 +57,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: puppeteer-test-report
-          path: |
-            test-report.log
-            preview.log
+          path: test-report.log
           if-no-files-found: ignore
